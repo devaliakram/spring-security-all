@@ -1,0 +1,38 @@
+package spring_security_model.security.entrysecurity;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        return http
+                .csrf(csrf -> csrf.disable())
+
+                .authorizeHttpRequests(auth -> auth
+
+                        // Public read API
+                        .requestMatchers(HttpMethod.GET, "/employees/employee/*")
+                        .permitAll()
+
+                        // All remaining APIs require authentication
+                        .anyRequest()
+                        .authenticated()
+                )
+
+                // Enables username/password Basic Authentication
+                .httpBasic(Customizer.withDefaults())
+
+                // Creates the final security filter chain
+                .build();
+    }
+}
