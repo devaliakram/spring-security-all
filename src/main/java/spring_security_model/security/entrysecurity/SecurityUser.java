@@ -1,0 +1,52 @@
+package spring_security_model.security.entrysecurity;
+
+import org.jspecify.annotations.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import spring_security_model.security.entity.AppUser;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * This class is loaded and understand by spring to get the information of AppUser class,
+ *  Simple(AppUser) is not being read by Spring Security
+ *
+     *    This class acts as an adapter:
+     *
+     *     AppUser entity
+     *        ↓
+     *     SecurityUser
+     *        ↓
+     *     UserDetails understood by Spring Security
+ */
+public class SecurityUser implements UserDetails {
+
+    private final AppUser appUser;
+
+    public SecurityUser(AppUser appUser){
+        this.appUser=appUser;
+    }
+
+    /**
+     * AppUser role = ADMIN is converted into:
+     *
+     * GrantedAuthority = ROLE_ADMIN
+     *
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE" +appUser.getRole()));
+    }
+
+    @Override
+    public @Nullable String getPassword() {
+        return appUser.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return appUser.getUsername();
+    }
+}
