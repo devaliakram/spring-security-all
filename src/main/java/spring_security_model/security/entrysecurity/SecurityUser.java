@@ -11,33 +11,33 @@ import java.util.List;
 
 /**
  * This class is loaded and understand by spring to get the information of AppUser class,
- *  Simple(AppUser) is not being read by Spring Security
- *
-     *    This class acts as an adapter:
-     *
-     *     AppUser entity
-     *        ↓
-     *     SecurityUser
-     *        ↓
-     *     UserDetails understood by Spring Security
+ * Simple(AppUser) is not being read by Spring Security
+ * <p>
+ * This class acts as an adapter:
+ * <p>
+ * AppUser entity
+ * ↓
+ * SecurityUser
+ * ↓
+ * UserDetails understood by Spring Security
  */
 public class SecurityUser implements UserDetails {
 
     private final AppUser appUser;
 
-    public SecurityUser(AppUser appUser){
-        this.appUser=appUser;
+    public SecurityUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
     /**
      * AppUser role = ADMIN is converted into:
-     *
+     * <p>
      * GrantedAuthority = ROLE_ADMIN
      *
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE" +appUser.getRole()));
+        return List.of(new SimpleGrantedAuthority("ROLE" + appUser.getRole()));
     }
 
     @Override
@@ -45,8 +45,30 @@ public class SecurityUser implements UserDetails {
         return appUser.getPassword();
     }
 
+
     @Override
     public String getUsername() {
         return appUser.getUsername();
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return appUser.isEnabled();
+    }
+
 }
