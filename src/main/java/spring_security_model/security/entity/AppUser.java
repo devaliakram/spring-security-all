@@ -25,13 +25,7 @@ public class AppUser {
     public AppUser() {
     }
 
-    public AppUser(
-            Long id,
-            String username,
-            String password,
-            String role,
-            boolean enabled
-    ) {
+    public AppUser(Long id, String username, String password, String role, boolean enabled) {
         this.id = id;
         this.username = username;
         this.password = password;

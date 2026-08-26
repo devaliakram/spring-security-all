@@ -46,6 +46,8 @@ public class SecurityConfiguration {
 
                         .requestMatchers(HttpMethod.GET, "/employees/employee/*").permitAll()
 
+                        .requestMatchers("/mongo/**").permitAll()
+
                         .anyRequest().authenticated())
 
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
