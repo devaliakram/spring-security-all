@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/employees/employee/*").permitAll()
+                     //   .requestMatchers(HttpMethod.POST, "/order/v1/*").permitAll()
 
                         .requestMatchers("/mongo/**").permitAll()
 
