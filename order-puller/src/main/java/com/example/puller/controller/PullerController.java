@@ -1,0 +1,1 @@
+package com.example.puller.controller;import org.springframework.web.bind.annotation.*;import java.util.*;@RestController @RequestMapping("/internal/puller") public class PullerController{@GetMapping("/status")public Map<String,String> status(){Map<String,String> m=new LinkedHashMap<String,String>();m.put("service","order-puller");m.put("status","UP");return m;}}
