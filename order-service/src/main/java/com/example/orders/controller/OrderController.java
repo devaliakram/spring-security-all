@@ -1,1 +1,39 @@
-package com.example.orders.controller;import com.example.orders.dto.OrderRequest;import com.example.orders.entity.OrderEntity;import com.example.orders.service.OrderApplicationService;import org.springframework.http.*;import org.springframework.web.bind.annotation.*;import javax.validation.Valid;import java.util.List;@RestController @RequestMapping("/api/v1/orders") public class OrderController{private final OrderApplicationService service;public OrderController(OrderApplicationService s){service=s;}@PostMapping public ResponseEntity<OrderEntity> create(@Valid @RequestBody OrderRequest r){return ResponseEntity.status(HttpStatus.CREATED).body(service.create(r));}@GetMapping public List<OrderEntity> all(){return service.all();}@GetMapping("/{id}") public OrderEntity one(@PathVariable Long id){return service.one(id);}}
+package com.example.orders.controller;
+
+import com.example.orders.dto.OrderReqDTO;
+import com.example.orders.entity.Order;
+import com.example.orders.service.OrderService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/orders")
+public class OrderController {
+
+
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<Order> create(@Valid @RequestBody OrderReqDTO orderReqDTO) throws JsonProcessingException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.create(orderReqDTO));
+    }
+
+    @GetMapping("/all")
+    public List<Order> all() {
+        return orderService.all();
+    }
+
+    @GetMapping("/{id}")
+    public Order one(@PathVariable Long id) {
+        return orderService.one(id);
+    }
+}
