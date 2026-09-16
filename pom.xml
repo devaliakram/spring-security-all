@@ -13,7 +13,7 @@
     <artifactId>security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>security-order-platform</name>
+    <name>security-outbox-pattern</name>
     <modules>
         <module>security-app</module>
         <module>order-service</module>

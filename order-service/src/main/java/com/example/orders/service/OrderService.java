@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -34,6 +36,7 @@ public class OrderService {
     }
 
 
+    @Transactional(value = Transactional.TxType.REQUIRED,rollbackOn = SQLException.class)
     public Order create(OrderReqDTO reqDTO) throws JsonProcessingException {
 
         Order order = orderDtoToEntity.toEntity(reqDTO);
